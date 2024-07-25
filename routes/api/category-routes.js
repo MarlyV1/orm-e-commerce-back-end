@@ -9,6 +9,7 @@ router.get('/', async (req, res) => {
     const allCategories = await Category.findAll({
       include: [{ model: Product }]
     })
+    res.status(200).json(allCategories);
   } catch (error) {
     res.status(400).json(error.message)
     console.error(error.message);
@@ -20,7 +21,7 @@ router.get('/:id', async (req, res) => {
   // find one category by its `id` value
   try {
     const findOneCategory = await Category.findOne({
-      where: {category: req.params.id},
+      where: {id: req.params.id},
       include: [{ model: Product }]
     })
     res.status(200).json(findOneCategory);
@@ -49,6 +50,7 @@ router.put('/:id', async (req, res) => {
         id: req.params.id
       }
     })
+    res.status(200).json(updateCategory);
   } catch (error) {
     res.status(400).json(error);
     console.error(error.message);
@@ -63,11 +65,13 @@ router.delete('/:id', async (req, res) => {
         id: req.params.id
       }
     })
-    
+    res.status(200).json(deletedCategory);
+
     if(!deletedCategory){
       res.status(400).json({message: "No category found with that id"});
       return;
     }
+
   } catch (error) {
     res.status(400).json(error);
     console.error(error.message)

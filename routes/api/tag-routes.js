@@ -10,6 +10,7 @@ router.get('/', async (req, res) => {
     const allTags = await Tag.findAll({
       include: [{ model: Product }]
     })
+    res.status(200).json(allTags);
   } catch (error) {
     res.status(400).json(error)
   }
@@ -22,6 +23,7 @@ router.get('/:id', async (req, res) => {
       where: { id: req.params.id},
       include: [{ model: Product }]
     })
+    res.status(200).json(findOneTag);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -43,6 +45,7 @@ router.put('/:id', async (req, res) => {
     const updateTag = await Tag.update(req.body, {
       where: {id: req.params.id}
     })
+    res.status(200).json(updateTag);
   } catch (error) {
     res.status(400).json(error);
   }
@@ -54,7 +57,8 @@ router.delete('/:id', async (req, res) => {
     const deletedTag = await Tag.destroy({
       where: {id: req.params.id}
     })
-    
+    res.status(200).json(deletedTag);
+
     if(!deletedTag) {
       res.status(400).json('No tag is found with that id');
     }
